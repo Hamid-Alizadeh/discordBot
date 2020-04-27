@@ -145,5 +145,5 @@ async def change_status():
 
 if __name__ == '__main__':
 
-    token = 'Njk3MzY0NDc2NTA0MzA5Nzgw.Xo2O6g.ir9TEoZZgkpFRQDE52JnMjfBlOM'
+    token = ''
     client.run(token)
