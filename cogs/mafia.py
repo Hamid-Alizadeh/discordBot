@@ -39,13 +39,21 @@ emoji_list = ['\U0001F1E6', '\U0001F1E7', '\U0001F1E8',
 
 class Mafia(commands.Cog):
 
-
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
         print('Mafia Cog is online.')
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        print('NewMessage from "{0.author}" in {0.channel} in {0.guild}\n {0.content}'.format(message))
+
+    @commands.Cog.listener()
+    async def on_reaction_add(self, reaction, user):
+        channel = reaction.message
+        await user.send('{0} has reacted with {1.emoji} and {2.channel}!'.format(user, reaction, channel))
 
     @commands.command()
     async def ping(self, ctx):
@@ -258,7 +266,6 @@ def check_result(reaction, user):
                     result.append(str(player['name']))
     print(result)
     return True
-
 
 
 def setup(client):

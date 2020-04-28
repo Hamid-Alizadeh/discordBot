@@ -6,7 +6,16 @@ from discord.ext import commands, tasks
 from itertools import cycle
 import os
 import random
+import logging
 from threading import Timer
+
+logging.basicConfig(level=logging.WARNING)
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 client = commands.Bot(command_prefix='.')
 here = os.path.dirname(os.path.abspath(__file__))
@@ -20,13 +29,31 @@ async def on_command_error(ctx, error):
         await ctx.send("Invalid command used.")
     pass
 
-
 @client.event
 async def on_ready():
-    change_status.start()
-    # unload('mafia')
-    print('Logged on as {client.user}!')
+    # change_status.start()
+    print('list : {0.user}'.format(client))
+    print('Logged on as {0.user}!\n List of channels: {0.cached_messages}'.format(client))
 
+
+# @client.event
+# async def on_message(message):
+#     author = message.author
+#     content = message.content
+#     # message.content == message.content.lower()
+#     if author != client.user:
+#         channel = message.channel
+#         # await channel.send('Send me that 👍 reaction, mate')
+#
+#         def check(reaction, user):
+#             return user == message.author and str(reaction.emoji) == '👍'
+#
+#         try:
+#             reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+#         except asyncio.TimeoutError:
+#             await channel.send('👎')
+#         else:
+#             await channel.send('👍')
 
 # @client.event
 # async def on_message(message):
@@ -138,12 +165,12 @@ async def clear_error(ctx, error):
         await ctx.send("please specify an amount of messages to delete.")
 
 
-@tasks.loop(seconds=10)
-async def change_status():
-    await client.change_presence(activity=discord.Game(next(status)))
+# @tasks.loop(seconds=10)
+# async def change_status():
+#     await client.change_presence(activity=discord.Game(next(status)))
 
 
 if __name__ == '__main__':
 
-    token = 'Njk3MzY0NDc2NTA0MzA5Nzgw.Xo2O6g.ir9TEoZZgkpFRQDE52JnMjfBlOM'
+    token = 'Njk3MzY0NDc2NTA0MzA5Nzgw.XqbxvA.YBAptj08NzPMW5jT3rFTE8u5zDI'
     client.run(token)
