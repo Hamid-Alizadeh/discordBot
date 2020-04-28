@@ -172,5 +172,5 @@ async def clear_error(ctx, error):
 
 if __name__ == '__main__':
 
-    token = 'Njk3MzY0NDc2NTA0MzA5Nzgw.XqbxvA.YBAptj08NzPMW5jT3rFTE8u5zDI'
+    token = ''
     client.run(token)
