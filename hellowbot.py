@@ -9,31 +9,31 @@ import random
 import logging
 from threading import Timer
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.WARNING)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-client = commands.Bot(command_prefix='.')
+bot = commands.Bot(command_prefix='.')
 here = os.path.dirname(os.path.abspath(__file__))
 invitation = "https://discordapp.com/api/oauth2/authorize?client_id=697364476504309780&scope=bot"
 status = cycle(['Status 1', 'Status 2'])
 
 
-@client.event
+@bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Invalid command used.")
     pass
 
-@client.event
+@bot.event
 async def on_ready():
     # change_status.start()
-    print('list : {0.user}'.format(client))
-    print('Logged on as {0.user}!\n List of channels: {0.cached_messages}'.format(client))
+    print('list : {0.user}'.format(bot))
+    print('Logged on as {0.user}!\n List of channels: {0.cached_messages}'.format(bot))
 
 
 # @client.event
@@ -67,7 +67,7 @@ async def on_ready():
 #         await client.process_commands(message)
 
 
-@client.command(aliases=['8ball', 'test'])
+@bot.command(aliases=['8ball', 'test'])
 async def _8ball(ctx, *, question):
     roles = ['Mafia',
              'Godfather',
@@ -82,20 +82,19 @@ async def _8ball(ctx, *, question):
         print('somthing')
 
 
-@client.command()
+@bot.command()
 async def load(ctx, extension):
-    client.load_extension(f'cogs.{extension}')
+    bot.load_extension(f'cogs.{extension}')
 
 
-@client.command()
+@bot.command()
 async def unload(ctx, extension):
-    client.unload_extension(f'cogs.{extension}')
+    bot.unload_extension(f'cogs.{extension}')
 
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
-
+        bot.load_extension(f'cogs.{filename[:-3]}')
 
 # @client.command()
 # async def slap(ctx, members: commands.Greedy[discord.Member], *, reason='no reason'):
@@ -126,7 +125,7 @@ for filename in os.listdir('./cogs'):
 #     await ctx.send(embed=embed)
 
 
-@client.command()
+@bot.command()
 async def dust(ctx):
     t = Timer(5.0, nasu)
     t.start()
@@ -154,7 +153,7 @@ def nasu():
     print("test")
 
 
-@client.command()
+@bot.command()
 async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
 
@@ -164,13 +163,11 @@ async def clear_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("please specify an amount of messages to delete.")
 
-
 # @tasks.loop(seconds=10)
 # async def change_status():
 #     await client.change_presence(activity=discord.Game(next(status)))
 
 
 if __name__ == '__main__':
-
-    token = ''
-    client.run(token)
+    token = 'Njk3MzY0NDc2NTA0MzA5Nzgw.Xu3k8A._iEuu2h6i-7SbvLtuAs6XMDpydM'
+    bot.run(token)
