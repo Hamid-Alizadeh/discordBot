@@ -4,6 +4,7 @@ import pickle
 import json
 from discord.ext import commands, tasks
 from itertools import cycle
+import mybottoken as bot_tok
 import os
 import random
 import logging
@@ -169,5 +170,5 @@ async def clear_error(ctx, error):
 
 
 if __name__ == '__main__':
-    token = 'Njk3MzY0NDc2NTA0MzA5Nzgw.Xu3k8A._iEuu2h6i-7SbvLtuAs6XMDpydM'
+    token = bot_tok.bot_token
     bot.run(token)
