@@ -4,7 +4,7 @@ import pickle
 import json
 from discord.ext import commands, tasks
 from itertools import cycle
-import mybottoken as bot_tok
+import my_token as bot_tok
 import os
 import random
 import logging
